@@ -1,3 +1,7 @@
+#CIFAR10
+CIFAR10
+Checkpoints/*
+CheckpointsCondition/*
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]

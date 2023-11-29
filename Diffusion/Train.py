@@ -85,7 +85,17 @@ def eval(modelConfig: Dict):
         saveNoisy = torch.clamp(noisyImage * 0.5 + 0.5, 0, 1)
         save_image(saveNoisy, os.path.join(
             modelConfig["sampled_dir"], modelConfig["sampledNoisyImgName"]), nrow=modelConfig["nrow"])
-        sampledImgs = sampler(noisyImage)
+        sampledImgs,imgls = sampler(noisyImage) 
         sampledImgs = sampledImgs * 0.5 + 0.5  # [0 ~ 1]
+        imgls = [img * 0.5 + 0.5 for img in imgls]
         save_image(sampledImgs, os.path.join(
             modelConfig["sampled_dir"],  modelConfig["sampledImgName"]), nrow=modelConfig["nrow"])
+        if modelConfig["save_middle_result"]:
+            for i in range(len(imgls)):
+                save_image(imgls[i], os.path.join(
+                    modelConfig["sampled_dir"],  "middle"+str(i)+".png"), nrow=modelConfig["nrow"])
+        # concate all the images in imgls
+        imgls = torch.cat(imgls, dim=0)
+        save_image(imgls, os.path.join(
+            modelConfig["sampled_dir"],  "middleAll.png"), nrow=modelConfig["nrow"]*10)
+        

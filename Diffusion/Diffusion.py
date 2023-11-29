@@ -3,8 +3,6 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 
-import numpy as np
-
 
 def extract(v, t, x_shape):
     """
@@ -86,6 +84,8 @@ class GaussianDiffusionSampler(nn.Module):
         Algorithm 2.
         """
         x_t = x_T
+        x={} # save the sampled images every 100 steps
+        sep = self.T//10
         for time_step in reversed(range(self.T)):
             print(time_step)
             t = x_t.new_ones([x_T.shape[0], ], dtype=torch.long) * time_step
@@ -97,7 +97,10 @@ class GaussianDiffusionSampler(nn.Module):
                 noise = 0
             x_t = mean + torch.sqrt(var) * noise
             assert torch.isnan(x_t).int().sum() == 0, "nan in tensor."
+            if (time_step)%sep==0:
+                x[(time_step)//sep]=x_t
         x_0 = x_t
-        return torch.clip(x_0, -1, 1)   
+
+        return torch.clip(x_0, -1, 1), [torch.clip(x[i], -1, 1) for i in range(0,10)]
 
 
