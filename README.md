@@ -4,7 +4,7 @@ I modify the code to make it easier to run and add some comments to make it easi
 I also trained the model on CIFAR-10 dataset and upload the pretrain weight, in [Checkpoints](./Checkpoints/) folder.
 CIFAR-10 dataset is in [CIFAR10](./CIFAR10/)
 
-To provide a vivid example of diffusion process, I also add a part to demonstrate the diffusion process of DDPM. The result is in [SampledImgs](./Imgs/NoGuidence_diffusion_visualization/)
+To provide a vivid example of diffusion process, I also add a part to demonstrate the diffusion process of DDPM. The result is in [Imgs](./Imgs/NoGuidence_diffusion_visualization/)
 ## How to run
 ### 0. Install the requirements
 ```bash
